@@ -26,10 +26,10 @@ Before running mixed-length training on lengths 8, 16, and 24, learned encodings
 
 ## Results
 
-**1 — Verification and parameter counts:**
+**Verification and parameter counts:**
 Custom scaled dot-product attention and multi-head attention matched PyTorch within 2.4e-07 across masked, unmasked, and cross-attention checks, while permutation tests confirmed attention is completely order-blind on its own. Splitting across 1, 2, 4, or 8 heads did not change the total parameter count, staying constant at 4,224 weights for width 32 because multi-head attention reshapes existing projection layers rather than adding new weights.
 
-**P2 — Delayed recall (Attention readout vs. LSTM, chance is 0.25):**
+**Delayed Recall: Attention vs. LSTM(recall_figure.png):**
 The delayed recall experiment tested how well each architecture could remember a target token placed at step 0 across random filler noise. At a short sequence length of 30, both the attention readout and the LSTM achieved perfect accuracy. At length 100, the attention readout maintained perfect accuracy, while the LSTM began to struggle, dropping to an average accuracy of 66.7%. At length 400, the LSTM completely broke down to random chance at 24.5%, whereas the attention readout remained at 100% accuracy. The LSTM failed over long distances because it must pass information sequentially step-by-step through noise to reach the final state. In contrast, attention uses a single direct hop, keeping over 71% of its focus squarely on step 0 regardless of how long the sequence becomes.
 
 **Positional encodings on the order task (chance is 0.50):**
